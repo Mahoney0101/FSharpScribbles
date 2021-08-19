@@ -15,11 +15,11 @@ work
 printfn "Second"
 
 let task =
-async{
-    let name = "james"
-    return name
-}
-|> Async.StartAsTask
+    async{
+        let name = "james"
+        return name
+    } |> Async.StartAsTask
 
-task
+let value = task.Result
 
+printfn "%s" value
