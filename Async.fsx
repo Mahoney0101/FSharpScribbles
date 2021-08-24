@@ -1,25 +1,30 @@
-let work =
+let root =
     async{
-        do! Async.Sleep 2000
-        do printfn "First"
-    }
+        do printfn "Root"
+    }|>Async.Start
 
-work
-|> Async.Start
-
-printfn "Second"
-
-work
-|> Async.RunSynchronously
-
-printfn "Second"
-
-let task =
+let x =
     async{
-        let name = "james"
-        return name
-    } |> Async.StartAsTask
+        root
+        do printfn "\nx"
+    }|>Async.Start
 
-let value = task.Result
+let y =
+    async{
+        x
+        do printfn "\ny"
+    }|>Async.Start
 
-printfn "%s" value
+let z =
+    async{
+        y
+        do printfn "\nz"
+    }|>Async.Start
+
+let head =
+    async{
+        z
+        do printfn "\nhead"
+    }|>Async.Start
+
+head
