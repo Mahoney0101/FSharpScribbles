@@ -1,3 +1,6 @@
+open System.Net.Http
+
+
 let root =
     async{
         do printfn "Root"
@@ -28,3 +31,14 @@ let head =
     }|>Async.Start
 
 head
+
+let client = new HttpClient();
+
+let getGooglePageContent =
+    async{
+        let! get = client.GetAsync("http://www.google.com") |> Async.AwaitTask
+        let! content = get.Content.ReadAsStringAsync() |> Async.AwaitTask
+        printfn "%s" content
+    }|>Async.Start
+
+getGooglePageContent
